@@ -27,11 +27,24 @@ end
 
 --- Set text of given node.
 ---@param node TSNode
----@param text string
+---@param text string | table
 ---@param bufnr number | nil
 M.set_node_text = function(node, text, bufnr)
   local sr, sc, er, ec = node:range()
-  vim.api.nvim_buf_set_text(bufnr or 0, sr, sc, er, ec, { text })
+  local content = { text }
+  if (type(text) == 'table') then content = text end
+  vim.api.nvim_buf_set_text(bufnr or 0, sr, sc, er, ec, content)
+end
+
+--- Get text of given node.
+---@param node TSNode
+---@param bufnr number | nil
+---@return string | string[]
+M.get_node_text = function(node, bufnr)
+  local sr, sc, er, ec = node:range()
+  local text = vim.api.nvim_buf_get_text(bufnr or 0, sr, sc, er, ec, {})
+  if (#text == 1) then return text[1] end
+  return text
 end
 
 return M
