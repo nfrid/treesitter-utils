@@ -1,5 +1,3 @@
-require('treesitter-utils.types')
-
 local M = {}
 
 --- Find parent node of given type.
