@@ -5,7 +5,7 @@ local M = {}
 ---@param type string
 ---@return TSNode | nil
 M.find_parent_node = function(node, type)
-  if (node == node:tree():root()) then return nil end
+  if (node == node:root()) then return nil end
   if (node:type() == type) then return node end
   return M.find_parent_node(node:parent(), type)
 end
